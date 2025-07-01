@@ -6,7 +6,6 @@
 int main()
 
 {
-	
 	std::cout << NAME;
 	std::cout << "Hello,World!\n";
 	std::cout << blood::pi << std::endl;
