@@ -1,28 +1,3 @@
-
-/*
-#include <iostream>
-#include "../Engine/Core/Math/Math.h"
-#include "../Engine/Core/Random.h"
-
-//#define NAME "Cameron\n"
-
-using namespace blood;
-/*
-int main()
-
-{
-	std::cout << NAME;
-	std::cout << "Hello,World!\n";
-	std::cout << math::pi << std::endl;
-	//const float deg = blood::radToDeg(blood::pi);
-	math::min(5, 3);
-	math::clamp(2, 3, 4);
-
-	for (int i = 0; i < 10; i++) {
-		std::cout << random::getRandomFloat() << std::endl;
-	}
-} */
-
 #include <SDL3/SDL.h>
 #include <iostream>
 #include <vector>
@@ -52,7 +27,10 @@ int main(int argc, char* argv[]) {
         stars.push_back(vec2(random::getRandomFloat() * 1280, random::getRandomFloat() * 1024));
     }
 
+
+    //main loop
     while (!quit) {
+        
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
@@ -68,14 +46,14 @@ int main(int argc, char* argv[]) {
 		
         for (vec2 star : stars) {
             renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
-            renderer.DrawPoint(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat());
+            renderer.DrawPoint(star.x,star.y);
         }
 
 
-        for (vec2 star : stars) {
-            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
-            renderer.DrawLine(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat(), random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat()); // Render a random line            
-        }
+        //for (vec2 star : stars) {
+        //    renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
+        //    renderer.DrawLine(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat(), random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat()); // Render a random line            
+        //}
 
 
         renderer.Present(); // Render the screen
