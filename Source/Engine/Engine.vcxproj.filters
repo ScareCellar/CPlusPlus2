@@ -12,21 +12,39 @@
     <Filter Include="Source\Core">
       <UniqueIdentifier>{4607f528-482f-4985-8d46-6ba4241af885}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{1b7aa739-27f6-4c37-855d-a21ad0dc8a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Renderer">
+      <UniqueIdentifier>{b7591544-0cbc-4d49-9e40-2a2aac0af420}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Renderer.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Math.h">
-      <Filter>Source\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Random.h">
       <Filter>Source\Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\Time.h">
       <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Math\Math.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\File.h">
+      <Filter>Source\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Renderer.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Math\Vector2.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
