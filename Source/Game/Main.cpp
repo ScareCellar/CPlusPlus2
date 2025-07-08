@@ -52,9 +52,6 @@ int main(int argc, char* argv[]) {
         stars.push_back(vec2(random::getRandomFloat() * 1280, random::getRandomFloat() * 1024));
     }
 
-    // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
-
     while (!quit) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
@@ -74,7 +71,12 @@ int main(int argc, char* argv[]) {
             renderer.DrawPoint(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat());
         }
 
-        renderer.DrawLine(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat(), random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat()); // Render a random line
+
+        for (vec2 star : stars) {
+            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
+            renderer.DrawLine(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat(), random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat()); // Render a random line            
+        }
+
 
         renderer.Present(); // Render the screen
     }

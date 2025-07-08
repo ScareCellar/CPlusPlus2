@@ -1,5 +1,7 @@
 #pragma once
+#include <SDL3/SDL.h>
 #include <algorithm>
+#include <cmath>
 
 namespace blood {
 	namespace math {
@@ -12,5 +14,11 @@ namespace blood {
 
 		using std::min;
 		using std::clamp;
+		using std::sqrt;
+		using std::sqrtf;
+		using std::sin;
+		using std::sinf;
+		using std::cos;
+		using std::cosf;
 	}
 }
