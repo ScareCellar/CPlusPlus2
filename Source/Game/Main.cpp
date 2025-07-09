@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
         stars.push_back(vec2(random::getRandomFloat() * 1280, random::getRandomFloat() * 1024));
     }
 
+    std::vector<vec2> speed = Vector2<blood::vec2>(40, 0);
 
     //main loop
     while (!quit) {
