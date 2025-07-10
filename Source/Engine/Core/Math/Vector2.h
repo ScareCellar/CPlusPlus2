@@ -22,9 +22,9 @@ namespace blood {
 		Vector2& operator *=(const Vector2& v) { x *= v.x, y *= v.y; return this; };
 		Vector2& operator /=(const Vector2& v) { x /= v.x, y /= v.y; return this; };
 
-		// a^2 + b^2 = c^2
-
 		
+
+		//pythagorean theorum
 		float LengthSqr() const { return ((x * x) + (y * y)); }
 		float Length() const { return math::sqrtf(LengthSqr()); }
 	};
