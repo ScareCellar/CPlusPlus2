@@ -23,10 +23,10 @@ int main(int argc, char* argv[]) {
     
     SDL_Event e;
 
-    std::vector<vec2> stars;
+    /*std::vector<vec2> stars;
     for (int i = 0; i < 100; i++) {
         stars.push_back(vec2(random::getRandomFloat() * 1280, random::getRandomFloat() * 1024));
-    }
+    }*/
 
     //std::vector<vec2> speed = Vector2<blood::vec2>(40, 0);
     blood::vec2 speed{ -140.0f, 0.0f };
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
             std::cout << "F key press!" << std::endl;
         }
 
-        if (input.GetMouseButtonDown(0)) {
+        if (input.GetMouseButtonDown(blood::InputSystem::MouseButton::Left)) {
             std::cout << "LMB pressed!\n";
         }
 
@@ -66,10 +66,10 @@ int main(int argc, char* argv[]) {
         std::cout << mouse.x << ", " << mouse.y << std::endl;*/
 
 		
-        for (vec2 star : stars) {
-            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
-            renderer.DrawPoint(star.x,star.y);
-        }
+        //for (vec2 star : stars) {
+        //    renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255); // Set render draw color to random color
+        //    renderer.DrawPoint(star.x,star.y);
+        //}
 
 
         //for (vec2 star : stars) {
