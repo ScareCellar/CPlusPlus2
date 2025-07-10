@@ -11,14 +11,16 @@ namespace blood {
 
 		constexpr float radToDeg(float rad) { return rad * (180 / pi); }
 		constexpr float degToRad(float deg) { return deg * (pi / 180); }
+		
+		inline float square(float num) { return num * num; }
 
-		using std::min;
-		using std::clamp;
-		using std::sqrt;
-		using std::sqrtf;
-		using std::sin;
-		using std::sinf;
-		using std::cos;
-		using std::cosf;
+		using std::min
+			, std::clamp
+			, std::sqrt
+			, std::sqrtf
+			, std::sin
+			, std::sinf
+			, std::cos
+			, std::cosf;
 	}
 }

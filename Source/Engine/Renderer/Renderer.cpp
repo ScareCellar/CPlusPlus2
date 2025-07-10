@@ -11,7 +11,7 @@ namespace blood
     }
 
     bool Renderer::CreateWindow(const std::string name, int width, int height) {
-        m_window = SDL_CreateWindow("SDL3 Project", 1280, 1024, 0);
+        m_window = SDL_CreateWindow("SDL3 Project", width, height, 0);
         if (m_window == nullptr) {
             std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
             SDL_Quit();
@@ -26,7 +26,7 @@ namespace blood
             return false;
         }
 
-
+        return true;
     }
 
     void Renderer::SetColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {

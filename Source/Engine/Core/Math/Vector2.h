@@ -25,7 +25,9 @@ namespace blood {
 		
 
 		//pythagorean theorum
-		float LengthSqr() const { return ((x * x) + (y * y)); }
+		float LengthSqr() const { 
+			return ((x * x) + (y * y));
+		}
 		float Length() const { return math::sqrtf(LengthSqr()); }
 	};
 
