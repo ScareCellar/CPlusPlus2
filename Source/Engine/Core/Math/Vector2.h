@@ -4,7 +4,10 @@
 namespace blood {
 	template<typename T>
 	struct Vector2 {
-		T x, y;
+		union {
+			struct { T x, y; };
+			struct { T u, v; };
+		};
 
 		Vector2() = default;
 

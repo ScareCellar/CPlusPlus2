@@ -10,6 +10,7 @@
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Input/InputSystem.h"
 #include "../Engine/Core/Audio/AudioSystem.h" 
+#include "../Engine/Core/Math/Vector3.h"
 
 using namespace blood;
 
@@ -71,7 +72,10 @@ int main(int argc, char* argv[]) {
         } 
 
         //draw
-        renderer.SetColor(0, 0, 0, 255); // Set render draw color to black
+        blood::vec3 color(1, 1, 0);
+
+        renderer.SetColorFloat(color.r, color.g, color.b);
+        //renderer.SetColor(0, 0, 0, 255); // Set render draw color to black
 		renderer.Clear(); // Clear the screen
 
         renderer.SetColor(255, 255, 255, 255);
@@ -152,7 +156,7 @@ int main(int argc, char* argv[]) {
 
         //play drum sounds
         if (input.GetKeyPressed(SDL_SCANCODE_A)) {
-            audio.PlaySound(bass.wav);
+            audio.PlaySound("bass");
         }
 
 

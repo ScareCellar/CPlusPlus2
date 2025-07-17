@@ -17,7 +17,7 @@ namespace blood
 		void Clear();
 		void ShutDown();
 
-		void SetColor(float r, float g, float b, float a = 1.0f);
+		void SetColorFloat(float r, float g, float b, float a = 1.0f);
 
 		void DrawLine(float x1, float y1, float x2, float y2);
 		void DrawPoint(float x, float y);

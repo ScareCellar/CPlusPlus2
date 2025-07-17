@@ -153,6 +153,7 @@
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="InputSystem.cpp" />
+    <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +166,7 @@
     <ClInclude Include="Core\StringHelper.h" />
     <ClInclude Include="Core\Time.h" />
     <ClInclude Include="Input\InputSystem.h" />
+    <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Sound\Header.h" />
   </ItemGroup>
