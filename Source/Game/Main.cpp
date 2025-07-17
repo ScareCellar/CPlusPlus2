@@ -16,14 +16,17 @@
 using namespace blood;
 
 int main(int argc, char* argv[]) {
+
+
     //create systems
 	    // create renderer system 
 	    blood::Renderer renderer;
-        renderer.Init();
-        renderer.CreateWindow("testing", 1980, 1224);
+        renderer.Initialize();
+        renderer.CreateWindow("Game", 1980, 1224);
 
         //create audio system
         blood::AudioSystem audio;
+        audio.Initialize();
 
         //create input system
         blood::InputSystem input;
@@ -42,6 +45,7 @@ int main(int argc, char* argv[]) {
 
 
     //initialize sounds
+    audio.AddSound("test.wav", "test");
     audio.AddSound("bass.wav", "bass");
     audio.AddSound("snare.wav", "snare");
     audio.AddSound("clap.wav", "clap");
@@ -49,21 +53,7 @@ int main(int argc, char* argv[]) {
     audio.AddSound("open-hat.wav", "open-hat");
     
 
-    //create stars
-    /*std::vector<vec2> stars;
-    for (int i = 0; i < 100; i++) {
-        stars.push_back(vec2(random::getRandomFloat() * 1280, random::getRandomFloat() * 1024));
-    }*/
-
-    std::vector<vec2> dragDrawnPoints;
-    std::vector<std::vector<vec2>> drawnLines;
-
-    vec2 lineToolStartPos{ 0,0 };
-    vec2 lineToolEndPos{ 0,0 };
-
-    //std::vector<vec2> speed = Vector2<blood::vec2>(40, 0);
-    //blood::vec2 speed{ -140.0f, 0.0f };
-
+   
 
 
     //main loop

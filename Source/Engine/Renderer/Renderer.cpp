@@ -2,7 +2,7 @@
 using namespace blood;
 namespace blood
 {
-    bool Renderer::Init() {
+    bool Renderer::Initialize() {
         if (!SDL_Init(SDL_INIT_VIDEO)) {
             std::cerr << SDL_GetError() << std::endl;
             return false;

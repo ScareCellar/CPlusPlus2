@@ -8,7 +8,7 @@ namespace blood
 	public:
 		Renderer() = default;
 
-		bool Init();
+		bool Initialize();
 
 		bool CreateWindow(const std::string name, int width, int height);
 
