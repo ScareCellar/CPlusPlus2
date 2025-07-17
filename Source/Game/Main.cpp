@@ -1,27 +1,48 @@
-#include <SDL3/SDL.h>
+//#include <SDL3/SDL.h>
 #include <iostream>
 #include <vector>
+#include <fmod.hpp>
+
+
 #include "../Engine/Core/Random.h"
 #include "../Engine/Core/Math/Math.h"
 #include "../Engine/Core/Math/Vector2.h"
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Input/InputSystem.h"
+#include "../Engine/Core/Audio/AudioSystem.h" 
 
 using namespace blood;
 
 int main(int argc, char* argv[]) {
-	// Initialize SDL  
-	blood::Renderer renderer;
-    renderer.Init();
+    //create systems
+	    // create renderer system 
+	    blood::Renderer renderer;
+        renderer.Init();
+        renderer.CreateWindow("testing", 1980, 1224);
 
-    renderer.CreateWindow("testing", 1980, 1224);
+        //create audio system
+        blood::AudioSystem audio;
 
-    //SDL_Event e;
+        //create input system
+        blood::InputSystem input;
+        input.Initialize();
+    //end system creation
+
 
     bool quit = false;
 
     SDL_Event e;
 
+
+
+
+    //initialize sounds
+    audio.AddSound("bass.wav", "bass");
+    audio.AddSound("snare.wav", "snare");
+    audio.AddSound("clap.wav", "clap");
+    audio.AddSound("close-hat.wav", "close-hat");
+    audio.AddSound("open-hat.wav", "open-hat");
+    
 
     //create stars
     /*std::vector<vec2> stars;
@@ -38,8 +59,6 @@ int main(int argc, char* argv[]) {
     //std::vector<vec2> speed = Vector2<blood::vec2>(40, 0);
     //blood::vec2 speed{ -140.0f, 0.0f };
 
-    blood::InputSystem input;
-    input.Initialize();
 
 
     //main loop
@@ -56,7 +75,7 @@ int main(int argc, char* argv[]) {
 		renderer.Clear(); // Clear the screen
 
         renderer.SetColor(255, 255, 255, 255);
-        //audio->Update();
+        audio.Update();
         input.Update();
 
         if (input.GetKeyDown(SDL_SCANCODE_A)) {
@@ -131,6 +150,12 @@ int main(int argc, char* argv[]) {
         //    renderer.DrawLine(random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat(), random::getRandomInt(1280) + random::getRandomFloat(), random::getRandomInt(1024) + random::getRandomFloat()); // Render a random line            
         //}
 
+        //play drum sounds
+        if (input.GetKeyPressed(SDL_SCANCODE_A)) {
+            audio.PlaySound(bass.wav);
+        }
+
+
 
         //shutdown when user presses escape button
         if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
@@ -141,7 +166,10 @@ int main(int argc, char* argv[]) {
         renderer.Present(); // Render the screen
     }
 
+    //shutdown systems
     renderer.ShutDown();
+    audio.Shutdown();
+    input.ShutDown();
 
     return 0;
 }
