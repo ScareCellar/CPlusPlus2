@@ -25,8 +25,6 @@ namespace blood {
 	}
 	void AudioSystem::Shutdown() {
 		CheckFMODResult(m_system->release());
-
-
 	}
 
 	void AudioSystem::Update() {
