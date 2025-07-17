@@ -75,7 +75,21 @@ int main(int argc, char* argv[]) {
             }
         } 
 
+        //draw
+        blood::vec3 color(1, 1, 0);
+
+        renderer.SetColorFloat(color.r, color.g, color.b);
         
+		renderer.Clear(); // Clear the screen
+
+        renderer.SetColor(255, 255, 255, 255);
+
+        //update necessary systems
+        audio.Update();
+        input.Update();
+
+        
+
         //play drum sounds
         if (input.GetKeyPressed(SDL_SCANCODE_A)) audio.PlaySound("bass");
         if (input.GetKeyPressed(SDL_SCANCODE_S)) audio.PlaySound("snare");
