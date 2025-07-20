@@ -13,7 +13,7 @@ namespace blood {
 			m_color = color;
 		}
 
-		void Draw(class Renderer& renderer);
+		void Draw(class Renderer& renderer, const vec2& position, float rotations, float scale);
 
 	private:
 		std::vector<vec2> m_points;

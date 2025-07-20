@@ -21,6 +21,8 @@ namespace blood {
 			, std::sin
 			, std::sinf
 			, std::cos
-			, std::cosf;
+			, std::cosf
+			, std::atan2
+			, std::atan2f;
 	}
 }

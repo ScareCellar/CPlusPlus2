@@ -12,6 +12,7 @@
 #include "../Engine/Core/Audio/AudioSystem.h" 
 #include "../Engine/Core/Math/Vector3.h"
 #include "../Engine/Renderer/Model.h"
+#include "../Engine/Core/Time.h"
 
 using namespace blood;
 
@@ -32,8 +33,18 @@ int main(int argc, char* argv[]) {
         blood::InputSystem input;
         input.Initialize();
 
+        //create time
+        blood::Time time;
+
         //create model
-        blood::Model model;
+        std::vector<blood::vec2> points{
+            { -5, -5 },
+            {  5, -5 },
+            {  5,  5 },
+            { -5,  5 },
+            { -5, -5 },
+        };
+        blood::Model model{ points, {0,0,1} };
     //end system creation
 
 
@@ -53,8 +64,9 @@ int main(int argc, char* argv[]) {
     audio.AddSound("open-hat.wav", "open-hat");
     
 
-   
+    audio.PlaySound("test");
 
+    vec3 color(0, 0, 0);
 
     //main loop
     while (!quit) {
@@ -66,25 +78,24 @@ int main(int argc, char* argv[]) {
         } 
 
         //draw
-        blood::vec3 color(1, 1, 0);
-
         renderer.SetColorFloat(color.r, color.g, color.b);
         
 		renderer.Clear(); // Clear the screen
 
-        renderer.SetColor(255, 255, 255, 255);
+        model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 5.0f);
 
         //update necessary systems
         audio.Update();
         input.Update();
+        time.Tick();
 
         
 
         //play drum sounds
-        if (input.GetKeyPressed(SDL_SCANCODE_A)) audio.PlaySound("bass");
-        if (input.GetKeyPressed(SDL_SCANCODE_S)) audio.PlaySound("snare");
-        if (input.GetKeyPressed(SDL_SCANCODE_D)) audio.PlaySound("clap");
-        if (input.GetKeyPressed(SDL_SCANCODE_Q)) audio.PlaySound("close-hat");
+        if (input.GetKeyPressed(SDL_SCANCODE_Q)) audio.PlaySound("bass");
+        if (input.GetKeyPressed(SDL_SCANCODE_W)) audio.PlaySound("snare");
+        if (input.GetKeyPressed(SDL_SCANCODE_A)) audio.PlaySound("clap");
+        if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("close-hat");
         if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("open-hat");
 
         //shutdown when user presses escape button

@@ -19,6 +19,8 @@ namespace blood {
 		Vector2 operator -(const Vector2& v) const { return Vector2{ x - v.x, y - v.y }; }
 		Vector2 operator *(const Vector2& v) const { return Vector2{ x * v.x, y * v.y }; }
 		Vector2 operator /(const Vector2& v) const { return Vector2{ x / v.x, y / v.y }; }
+		
+		Vector2 operator *(const float f) const { return Vector2{ x * f, y * f }; }
 
 		Vector2& operator +=(const Vector2& v) { x += v.x, y += v.y; return this; };
 		Vector2& operator -=(const Vector2& v) { x -= v.x, y -= v.y; return this; };
@@ -31,7 +33,23 @@ namespace blood {
 		float LengthSqr() const { 
 			return ((x * x) + (y * y));
 		}
+
 		float Length() const { return math::sqrtf(LengthSqr()); }
+
+		//normalizing distance
+		Vector2 Normalized() const { return *this / Length(); }
+
+		float Angle() const { return math::atan2f(y, x); };
+
+
+		Vector2 Rotate(float radians) const {
+			Vector2 v;
+
+			v.x = x * math::cosf(radians) - y * math::sinf(radians);
+			v.y = x * math::sinf(radians) + y * math::cosf(radians);
+
+			return v;
+		}
 	};
 
 	using ivec2 = Vector2<int>;
