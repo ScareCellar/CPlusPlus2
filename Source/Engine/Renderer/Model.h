@@ -20,6 +20,5 @@ namespace blood {
 	private:
 		std::vector<vec2> m_points;
 		vec3 m_color{ 1,1,1 };
-
 	};
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <fmod.hpp>
+#include <memory>
 
 
 #include "../Engine/Core/Random.h"
@@ -39,19 +40,47 @@ int main(int argc, char* argv[]) {
 
         //create model
         std::vector<blood::vec2> points{
-            { -5, -5 },
-            {  5, -5 },
-            {  5,  5 },
-            { -5,  5 },
-            { -5, -5 },
+            { 0.25, 0},
+            { 0.1767766, 0.1767766},
+            { 0, 0.25},
+            { -0.1767766, 0.1767766},
+            { -0.25, 0},
+            { -1, 0},
+            { -1, 1.75},
+            { -1.5, 1.75},
+            { -1.5, -0.75},
+            { -1, -0.75},
+            { -1, 0},
+            { -1, -1},
+            { 0, -2.5},
+            { 1, -1},
+            { 1, -0.75},
+            { 1.5, -0.75},
+            { 1.5, 1.75},
+            { 1, 1.75},
+            { 1, 2},
+            { -1, 2},
+            { -1, -1},
+            { 1, -1},
+            { 1, 2},
+            { 1, 0},
+            { 0.25, 0},
+            { 0.1767766, -0.1767766},
+            { 0, -0.25},
+            { -0.1767766, -0.1767766},
+            { -0.25, 0},
         };
-        blood::Model* model = new Model{ points, {0,0,1} };
+
+        std::shared_ptr<Model> model = std::make_shared<Model>(points, blood::vec3{1,1,0});
+
+        //blood::Model* model = new Model{ points, {0,0,1} };
+
+        //I am at 23 minutes in the video from thursday
 
         std::vector<blood::Actor> actors;
         for (int i = 0; i < 20; i++) {
-
-            blood::Transform transform = Transform({ random::getRandomFloat() * 1980 ,random::getRandomFloat() * 1224 }, math::halfPi / 2, (float)random::getRandomInt(101));
-            actors.push_back({ transform, model });
+            blood::Transform transform = Transform({ 890 ,612 }, 0, 50);
+            actors.push_back({ transform, model});
 
         }
     //end system creation
@@ -131,6 +160,8 @@ int main(int argc, char* argv[]) {
         }
         renderer.Present(); // Render the screen
     }
+    //delete pointers
+    
 
     //shutdown systems
     renderer.ShutDown();
@@ -139,4 +170,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
