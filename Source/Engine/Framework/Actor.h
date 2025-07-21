@@ -11,8 +11,8 @@ namespace blood {
 		Actor(const Transform& transform, std::shared_ptr<Model> model) : m_transform{ transform }, m_model{ model } {}
 
 		virtual void Update(float dt);
-		virtual void Draw(class Renderer renderer);
-		
+		virtual void Draw(class Renderer& renderer);
+
 		Transform& GetTransform() { return m_transform; }
 
 	protected:

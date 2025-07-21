@@ -14,15 +14,15 @@ namespace blood {
 		
 		inline float square(float num) { return num * num; }
 
-		using std::min
-			, std::clamp
-			, std::sqrt
-			, std::sqrtf
-			, std::sin
-			, std::sinf
-			, std::cos
-			, std::cosf
-			, std::atan2
-			, std::atan2f;
+		using std::min;
+		using std::clamp;
+		using std::sqrt;
+		using std::sqrtf;
+		using std::sin;
+		using std::sinf;
+		using std::cos;
+		using std::cosf;
+		using std::atan2;
+		using std::atan2f;
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <cassert>
-#include "Math.h"
+#include "MathUtils.h"
 namespace blood {
 	template<typename T>
 	struct Vector2 {

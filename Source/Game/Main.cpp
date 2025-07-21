@@ -4,9 +4,11 @@
 #include <fmod.hpp>
 #include <memory>
 
+#include "Game/Player.h"
+#include "Game/SpaceGame.h"
 
 #include "../Engine/Core/Random.h"
-#include "../Engine/Core/Math/Math.h"
+#include "../Engine/Core/Math/MathUtils.h"
 #include "../Engine/Core/Math/Vector2.h"
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Input/InputSystem.h"
@@ -14,76 +16,33 @@
 #include "../Engine/Core/Math/Vector3.h"
 #include "../Engine/Renderer/Model.h"
 #include "../Engine/Core/Time.h"
-#include "../Engine/Game/Actor.h"
+#include "../Engine/Framework/Actor.h"
+#include "../Engine/Source/Engine.h"
+#include "../Engine/Framework/Scene.h"
 
 using namespace blood;
 
 int main(int argc, char* argv[]) {
 
 
+
+
     //create systems
-	    // create renderer system 
-	    std::unique_ptr<blood::Renderer> renderer = std::make_unique<blood::Renderer>();
-        renderer->Initialize();
-        renderer->CreateWindow("Game", 1980, 1224);
+    GetEngine().Initialize();
+    
 
-        //create audio system
-        std::unique_ptr<blood::AudioSystem> audio = std::make_unique<blood::AudioSystem>(); 
-        audio->Initialize();
+    std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 
-        //create input system
-        std::unique_ptr<blood::InputSystem> input = std::make_unique<blood::InputSystem>();
-        input->Initialize();
+    game->Initialize();
 
-        //create time
-        blood::Time time;
-
-        //create model
-        std::vector<blood::vec2> points{
-            { 0.25, 0},
-            { 0.1767766, 0.1767766},
-            { 0, 0.25},
-            { -0.1767766, 0.1767766},
-            { -0.25, 0},
-            { -1, 0},
-            { -1, 1.75},
-            { -1.5, 1.75},
-            { -1.5, -0.75},
-            { -1, -0.75},
-            { -1, 0},
-            { -1, -1},
-            { 0, -2.5},
-            { 1, -1},
-            { 1, -0.75},
-            { 1.5, -0.75},
-            { 1.5, 1.75},
-            { 1, 1.75},
-            { 1, 2},
-            { -1, 2},
-            { -1, -1},
-            { 1, -1},
-            { 1, 2},
-            { 1, 0},
-            { 0.25, 0},
-            { 0.1767766, -0.1767766},
-            { 0, -0.25},
-            { -0.1767766, -0.1767766},
-            { -0.25, 0},
-        };
-
-        std::shared_ptr<Model> model = std::make_shared<Model>(points, blood::vec3{1,1,0});
-
-        //blood::Model* model = new Model{ points, {0,0,1} };
+    //create time
+    blood::Time time;
 
 
-        std::vector<blood::Actor> actors;
-        for (int i = 0; i < 20; i++) {
-            blood::Transform transform = Transform({ 890 ,612 }, 0, 50);
-            actors.push_back({ transform, model});
 
-        }
-    //end system creation
-
+    Scene scene;
+    //scene.AddActor(game->GetModel());
+    
 
     bool quit = false;
 
@@ -93,15 +52,15 @@ int main(int argc, char* argv[]) {
 
 
     //initialize sounds
-    audio->AddSound("test.wav", "test");
-    audio->AddSound("bass.wav", "bass");
-    audio->AddSound("snare.wav", "snare");
-    audio->AddSound("clap.wav", "clap");
-    audio->AddSound("close-hat.wav", "close-hat");
-    audio->AddSound("open-hat.wav", "open-hat");
+    GetEngine().GetAudio().AddSound("test.wav", "test");
+    GetEngine().GetAudio().AddSound("bass.wav", "bass");
+    GetEngine().GetAudio().AddSound("snare.wav", "snare");
+    GetEngine().GetAudio().AddSound("clap.wav", "clap");
+    GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
+    GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
     
 
-    audio->PlaySound("test");
+    GetEngine().GetAudio().PlaySound("test");
 
     vec3 color(0, 0, 0);
 
@@ -113,59 +72,43 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         } 
+        //update necessary systems
+        GetEngine().Update();
 
         //draw
-        renderer->SetColorFloat(color.r, color.g, color.b);
+        GetEngine().GetRenderer().SetColorFloat(color.r, color.g, color.b);
         
-		renderer->Clear(); // Clear the screen
+        GetEngine().GetRenderer().Clear(); // Clear the screen
 
-        for (Actor& actor : actors) {
-            actor.Draw(*renderer);
-        }
+        scene.Update(GetEngine().GetTime().GetDeltaTime());
 
-        //update necessary systems
-        audio->Update();
-        input->Update();
-        time.Tick();
-
-        
-
-        //play drum sounds
-        /*if (input.GetKeyPressed(SDL_SCANCODE_Q)) audio.PlaySound("bass");
-        if (input.GetKeyPressed(SDL_SCANCODE_W)) audio.PlaySound("snare");
-        if (input.GetKeyPressed(SDL_SCANCODE_A)) audio.PlaySound("clap");
-        if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("close-hat");
-        if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("open-hat");*/
-
-        /*if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation -= 1 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += 1 * time.GetDeltaTime();*/
+        scene.Draw(GetRenderer());
 
         blood::vec2 direction{ 0,0 };
-        if (input->GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
-        if (input->GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
+        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
+        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
+        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
+        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
         
 
         if (direction.LengthSqr() > 0) {
             direction = direction.Normalized();
-            for (Actor& actor : actors) {
-                actor.GetTransform().position += (direction * 200) * time.GetDeltaTime();
-            }
+            /*for (auto& actor : actors) {
+                actor->GetTransform().position += (direction * 200) * time.GetDeltaTime();
+            }*/
         }
         //shutdown when user presses escape button
-        if (input->GetKeyDown(SDL_SCANCODE_ESCAPE)) {
+        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_ESCAPE)) {
             break;
         }
-        renderer->Present(); // Render the screen
+
+        GetEngine().GetRenderer().Present(); // Render the screen
     }
     //delete pointers
     
 
     //shutdown systems
-    renderer->ShutDown();
-    audio->Shutdown();
-    input->ShutDown();
+    GetEngine().Shutdown();
 
     return 0;
 }
