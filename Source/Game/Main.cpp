@@ -13,6 +13,7 @@
 #include "../Engine/Core/Math/Vector3.h"
 #include "../Engine/Renderer/Model.h"
 #include "../Engine/Core/Time.h"
+#include "../Engine/Game/Actor.h"
 
 using namespace blood;
 
@@ -44,7 +45,15 @@ int main(int argc, char* argv[]) {
             { -5,  5 },
             { -5, -5 },
         };
-        blood::Model model{ points, {0,0,1} };
+        blood::Model* model = new Model{ points, {0,0,1} };
+
+        std::vector<blood::Actor> actors;
+        for (int i = 0; i < 20; i++) {
+
+            blood::Transform transform = Transform({ random::getRandomFloat() * 1980 ,random::getRandomFloat() * 1224 }, math::halfPi / 2, (float)random::getRandomInt(101));
+            actors.push_back({ transform, model });
+
+        }
     //end system creation
 
 
@@ -82,7 +91,9 @@ int main(int argc, char* argv[]) {
         
 		renderer.Clear(); // Clear the screen
 
-        model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 5.0f);
+        for (Actor& actor : actors) {
+            actor.Draw(renderer);
+        }
 
         //update necessary systems
         audio.Update();
@@ -92,18 +103,32 @@ int main(int argc, char* argv[]) {
         
 
         //play drum sounds
-        if (input.GetKeyPressed(SDL_SCANCODE_Q)) audio.PlaySound("bass");
+        /*if (input.GetKeyPressed(SDL_SCANCODE_Q)) audio.PlaySound("bass");
         if (input.GetKeyPressed(SDL_SCANCODE_W)) audio.PlaySound("snare");
         if (input.GetKeyPressed(SDL_SCANCODE_A)) audio.PlaySound("clap");
         if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("close-hat");
-        if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("open-hat");
+        if (input.GetKeyPressed(SDL_SCANCODE_E)) audio.PlaySound("open-hat");*/
 
+        /*if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation -= 1 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += 1 * time.GetDeltaTime();*/
+
+        blood::vec2 direction{ 0,0 };
+        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
+        
+
+        if (direction.LengthSqr() > 0) {
+            direction = direction.Normalized();
+            for (Actor& actor : actors) {
+                actor.GetTransform().position += (direction * 200) * time.GetDeltaTime();
+            }
+        }
         //shutdown when user presses escape button
         if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
             break;
         }
-        
-
         renderer.Present(); // Render the screen
     }
 

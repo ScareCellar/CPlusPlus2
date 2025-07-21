@@ -1,6 +1,7 @@
 #pragma once
 #include "../Core/Math/Vector2.h"
 #include "../Core/Math/Vector3.h"
+#include "../Core/Math/Transform.h"
 
 
 #include <vector>
@@ -14,6 +15,7 @@ namespace blood {
 		}
 
 		void Draw(class Renderer& renderer, const vec2& position, float rotations, float scale);
+		void Draw(class Renderer& renderer, const Transform& transform);
 
 	private:
 		std::vector<vec2> m_points;

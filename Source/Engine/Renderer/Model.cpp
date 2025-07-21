@@ -19,4 +19,7 @@ namespace blood {
 
 		}
 	}
+	void Model::Draw(class Renderer& renderer, const Transform& transform) {
+		Draw(renderer, transform.position, transform.rotation, transform.scale);
+	}
 }

@@ -20,12 +20,20 @@ namespace blood {
 		Vector2 operator *(const Vector2& v) const { return Vector2{ x * v.x, y * v.y }; }
 		Vector2 operator /(const Vector2& v) const { return Vector2{ x / v.x, y / v.y }; }
 		
-		Vector2 operator *(const float f) const { return Vector2{ x * f, y * f }; }
+		Vector2 operator +(float f) const { return Vector2{ x + f, y + f }; }
+		Vector2 operator -(float f) const { return Vector2{ x - f, y - f }; }
+		Vector2 operator *(float f) const { return Vector2{ x * f, y * f }; }
+		Vector2 operator /(float f) const { return Vector2{ x / f, y / f }; }
 
-		Vector2& operator +=(const Vector2& v) { x += v.x, y += v.y; return this; };
-		Vector2& operator -=(const Vector2& v) { x -= v.x, y -= v.y; return this; };
-		Vector2& operator *=(const Vector2& v) { x *= v.x, y *= v.y; return this; };
-		Vector2& operator /=(const Vector2& v) { x /= v.x, y /= v.y; return this; };
+		Vector2& operator +=(const Vector2& v) { x += v.x, y += v.y; return *this; };
+		Vector2& operator -=(const Vector2& v) { x -= v.x, y -= v.y; return *this; };
+		Vector2& operator *=(const Vector2& v) { x *= v.x, y *= v.y; return *this; };
+		Vector2& operator /=(const Vector2& v) { x /= v.x, y /= v.y; return *this; };
+
+		Vector2& operator +=(float f) const { return Vector2{ x += f, y += f }; return *this; }
+		Vector2& operator -=(float f) const { return Vector2{ x -= f, y -= f }; return *this; }
+		Vector2& operator *=(float f) const { return Vector2{ x *= f, y *= f }; return *this; }
+		Vector2& operator /=(float f) const { return Vector2{ x /= f, y /= f }; return *this; }
 
 		
 
