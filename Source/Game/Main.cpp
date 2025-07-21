@@ -23,17 +23,17 @@ int main(int argc, char* argv[]) {
 
     //create systems
 	    // create renderer system 
-	    blood::Renderer renderer;
-        renderer.Initialize();
-        renderer.CreateWindow("Game", 1980, 1224);
+	    std::unique_ptr<blood::Renderer> renderer = std::make_unique<blood::Renderer>();
+        renderer->Initialize();
+        renderer->CreateWindow("Game", 1980, 1224);
 
         //create audio system
-        blood::AudioSystem audio;
-        audio.Initialize();
+        std::unique_ptr<blood::AudioSystem> audio = std::make_unique<blood::AudioSystem>(); 
+        audio->Initialize();
 
         //create input system
-        blood::InputSystem input;
-        input.Initialize();
+        std::unique_ptr<blood::InputSystem> input = std::make_unique<blood::InputSystem>();
+        input->Initialize();
 
         //create time
         blood::Time time;
@@ -75,7 +75,6 @@ int main(int argc, char* argv[]) {
 
         //blood::Model* model = new Model{ points, {0,0,1} };
 
-        //I am at 23 minutes in the video from thursday
 
         std::vector<blood::Actor> actors;
         for (int i = 0; i < 20; i++) {
@@ -94,15 +93,15 @@ int main(int argc, char* argv[]) {
 
 
     //initialize sounds
-    audio.AddSound("test.wav", "test");
-    audio.AddSound("bass.wav", "bass");
-    audio.AddSound("snare.wav", "snare");
-    audio.AddSound("clap.wav", "clap");
-    audio.AddSound("close-hat.wav", "close-hat");
-    audio.AddSound("open-hat.wav", "open-hat");
+    audio->AddSound("test.wav", "test");
+    audio->AddSound("bass.wav", "bass");
+    audio->AddSound("snare.wav", "snare");
+    audio->AddSound("clap.wav", "clap");
+    audio->AddSound("close-hat.wav", "close-hat");
+    audio->AddSound("open-hat.wav", "open-hat");
     
 
-    audio.PlaySound("test");
+    audio->PlaySound("test");
 
     vec3 color(0, 0, 0);
 
@@ -116,17 +115,17 @@ int main(int argc, char* argv[]) {
         } 
 
         //draw
-        renderer.SetColorFloat(color.r, color.g, color.b);
+        renderer->SetColorFloat(color.r, color.g, color.b);
         
-		renderer.Clear(); // Clear the screen
+		renderer->Clear(); // Clear the screen
 
         for (Actor& actor : actors) {
-            actor.Draw(renderer);
+            actor.Draw(*renderer);
         }
 
         //update necessary systems
-        audio.Update();
-        input.Update();
+        audio->Update();
+        input->Update();
         time.Tick();
 
         
@@ -142,10 +141,10 @@ int main(int argc, char* argv[]) {
         if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += 1 * time.GetDeltaTime();*/
 
         blood::vec2 direction{ 0,0 };
-        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
-        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
+        if (input->GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
         
 
         if (direction.LengthSqr() > 0) {
@@ -155,18 +154,18 @@ int main(int argc, char* argv[]) {
             }
         }
         //shutdown when user presses escape button
-        if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
+        if (input->GetKeyDown(SDL_SCANCODE_ESCAPE)) {
             break;
         }
-        renderer.Present(); // Render the screen
+        renderer->Present(); // Render the screen
     }
     //delete pointers
     
 
     //shutdown systems
-    renderer.ShutDown();
-    audio.Shutdown();
-    input.ShutDown();
+    renderer->ShutDown();
+    audio->Shutdown();
+    input->ShutDown();
 
     return 0;
 }
