@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Engine/Framework/Actor.h"
-#include "../../Engine/Core/Math/Transform.h"
+#include "Framework/Actor.h"
+//#include "Core/Math/Transform.h"
 
 using namespace blood;
 

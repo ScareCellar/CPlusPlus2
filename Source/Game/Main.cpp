@@ -35,15 +35,6 @@ int main(int argc, char* argv[]) {
 
     game->Initialize();
 
-    //create time
-    blood::Time time;
-
-
-
-    Scene scene;
-    //scene.AddActor(game->GetModel());
-    
-
     bool quit = false;
 
     SDL_Event e;
@@ -80,9 +71,9 @@ int main(int argc, char* argv[]) {
         
         GetEngine().GetRenderer().Clear(); // Clear the screen
 
-        scene.Update(GetEngine().GetTime().GetDeltaTime());
+        game->GetScene()->Update(GetEngine().GetTime().GetDeltaTime());
 
-        scene.Draw(GetRenderer());
+        game->GetScene()->Draw(GetRenderer());
 
         blood::vec2 direction{ 0,0 };
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();

@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
 #include <memory>
+#include "../Framework/Actor.h"
 
-namespace blood {
+namespace blood{
 	class Scene {
 	public:
 		Scene() = default;
@@ -10,9 +11,9 @@ namespace blood {
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
 
-		void AddActor(std::unique_ptr<class Actor> actor);
+		void AddActor(std::unique_ptr<Actor> actor);
 
 	private:
-		std::vector<std::unique_ptr<class Actor>> m_actors;
+		std::vector<std::unique_ptr<Actor>> m_actors;
 	};
 }

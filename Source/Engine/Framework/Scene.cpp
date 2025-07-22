@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "../Renderer/Renderer.h"
-#include "Actor.h"
 
 
 namespace blood {

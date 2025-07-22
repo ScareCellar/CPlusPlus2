@@ -4,7 +4,7 @@
 
 using namespace blood;
 
-class Enemy : public blood::Actor {
+class Enemy : public Actor {
 public:
 	Enemy() = default;
 	Enemy(const Transform& transform, std::shared_ptr<Model> model) :
