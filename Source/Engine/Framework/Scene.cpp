@@ -5,7 +5,9 @@
 namespace blood {
 
 	void Scene::Update(float dt) {
-
+		for (auto& actor : m_actors) {
+			actor->Update(dt);
+		}
 	}
 	void Scene::Draw(Renderer& renderer) {
 		for (auto& actor : m_actors) {

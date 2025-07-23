@@ -8,6 +8,8 @@ namespace blood {
 			std::cerr << FMOD_ErrorString(result) << std::endl;
 			return false;
 		}
+
+		return true;
 	}
 
 

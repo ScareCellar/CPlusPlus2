@@ -2,12 +2,14 @@
 #include "Core/Math/Vector2.h"
 #include "Renderer/Model.h"
 #include "Player.h"
-
+#include "Source/Engine.h"
 
 #include <vector>
 
 bool SpaceGame::Initialize()
 {
+    m_scene = std::make_unique<Scene>();
+
     std::vector<blood::vec2> points{
         { 0.25f, 0},
         { 0.1767766f, 0.1767766f},
@@ -51,15 +53,16 @@ bool SpaceGame::Initialize()
         std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
         m_scene->AddActor(std::move(player));
     }
-    return false;
+
+    return true;
 }
 
 void SpaceGame::Update() {
-
+    m_scene->Update(GetEngine().GetTime().GetDeltaTime());
 }
 
 void SpaceGame::Draw() {
-
+    m_scene->Draw(GetRenderer());
 }
 
 void SpaceGame::Shutdown() {

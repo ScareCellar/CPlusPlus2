@@ -65,33 +65,18 @@ int main(int argc, char* argv[]) {
         } 
         //update necessary systems
         GetEngine().Update();
+        game->Update();
 
-        //draw
-        GetEngine().GetRenderer().SetColorFloat(color.r, color.g, color.b);
-        
-        GetEngine().GetRenderer().Clear(); // Clear the screen
-
-        game->GetScene()->Update(GetEngine().GetTime().GetDeltaTime());
-
-        game->GetScene()->Draw(GetRenderer());
-
-        blood::vec2 direction{ 0,0 };
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
-        if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
-        
-
-        if (direction.LengthSqr() > 0) {
-            direction = direction.Normalized();
-            /*for (auto& actor : actors) {
-                actor->GetTransform().position += (direction * 200) * time.GetDeltaTime();
-            }*/
-        }
         //shutdown when user presses escape button
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_ESCAPE)) {
             break;
         }
+
+        //draw
+        GetEngine().GetRenderer().SetColorFloat(color.r, color.g, color.b);
+        GetEngine().GetRenderer().Clear(); // Clear the screen
+
+        game->Draw();
 
         GetEngine().GetRenderer().Present(); // Render the screen
     }
@@ -103,3 +88,20 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
+/*
+        //blood::vec2 direction{ 0,0 };
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
+        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
+        //
+
+        //if (direction.LengthSqr() > 0) {
+        //    direction = direction.Normalized();
+            for (auto& actor : actors) {
+                actor->GetTransform().position += (direction * 200) * time.GetDeltaTime();
+            
+            //}
+
+*/
