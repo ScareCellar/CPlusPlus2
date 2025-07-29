@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
     
     Font* font = new Font();
-    font->Load("EverCapitals.ttf", 100);
+    font->Load("wingding.ttf", 100);
 
     Text* text = new Text(font);
     text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });
