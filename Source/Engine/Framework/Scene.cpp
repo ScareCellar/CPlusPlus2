@@ -6,12 +6,11 @@
 namespace blood {
 
 	void Scene::Update(float dt) {
-		//if (m_actors.empty()) {
-			for (auto& actor : m_actors) {
-				actor->Update(dt);
-			}
-		//}
+		for (auto& actor : m_actors) {
+			actor->Update(dt);
+		}
 	}
+
 	void Scene::Draw(Renderer& renderer) {
 		for (auto& actor : m_actors) {
 			actor->Draw(renderer);

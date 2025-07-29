@@ -19,6 +19,8 @@
 #include "Framework/Actor.h"
 #include "Engine.h"
 #include "Framework/Scene.h"
+#include "Renderer/Font.h"
+#include "Renderer/Text.h"
 
 
 
@@ -49,6 +51,12 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
     GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
     
+    Font* font = new Font();
+    font->Load("EverCapitals.ttf", 100);
+
+    Text* text = new Text(font);
+    text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });
+    
 
     GetEngine().GetAudio().PlaySound("clap");
 
@@ -76,8 +84,10 @@ int main(int argc, char* argv[]) {
         GetEngine().GetRenderer().Clear(); // Clear the screen
 
         game->Draw();
+        text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
         GetEngine().GetRenderer().Present(); // Render the screen
+
     }
     //delete pointers
     

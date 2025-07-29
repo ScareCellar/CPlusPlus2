@@ -185,6 +185,7 @@
     <ClCompile Include="Renderer\Font.cpp" />
     <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Audio\AudioSystem.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Renderer\Font.h" />
     <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\Text.h" />
     <ClInclude Include="Sound\Header.h" />
     <ClInclude Include="Source\Engine.h" />
   </ItemGroup>
