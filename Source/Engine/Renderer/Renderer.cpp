@@ -4,13 +4,22 @@ namespace blood
 {
     bool Renderer::Initialize() {
         if (!SDL_Init(SDL_INIT_VIDEO)) {
-            std::cerr << SDL_GetError() << std::endl;
+            std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
             return false;
         }
-        return true; // Placeholder for actual initialization logic
+
+        if (!TTF_Init()) {
+            std::cerr << "TTF_Init Error: " << SDL_GetError() << std::endl;
+            return false;
+        }
+
+        return true;
     }
 
     bool Renderer::CreateWindow(const std::string name, int width, int height) {
+        m_width = width;
+        m_height = height;
+
         m_window = SDL_CreateWindow("SDL3 Project", width, height, 0);
         if (m_window == nullptr) {
             std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -44,6 +53,7 @@ namespace blood
         SDL_RenderClear(m_renderer);
     }
     void Renderer::Shutdown() {
+        TTF_Quit();
         SDL_DestroyRenderer(m_renderer);
         SDL_DestroyWindow(m_window);
         SDL_Quit();

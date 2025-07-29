@@ -56,6 +56,9 @@
     <ClCompile Include="Core\Audio\AudioSystem.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Font.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Random.h">
@@ -100,14 +103,17 @@
     <ClInclude Include="Source\Engine.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Framework</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Game.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Core\Audio\AudioSystem.h">
       <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Scene.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Font.h">
+      <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

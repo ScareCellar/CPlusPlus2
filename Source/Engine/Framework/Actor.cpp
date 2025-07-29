@@ -8,6 +8,7 @@ namespace blood {
     void Actor::Update(float dt)
     {
         m_transform.position += velocity * dt;
+        velocity = velocity * (1.0f - damping * dt);
     }
 
     void Actor::Draw(Renderer& renderer)

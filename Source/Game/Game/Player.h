@@ -1,6 +1,5 @@
 #pragma once
 #include "Framework/Actor.h"
-//#include "Core/Math/Transform.h"
 
 using namespace blood;
 
@@ -12,6 +11,9 @@ public:
 
 	void Update(float dt) override;
 	void Draw(Renderer& renderer) override;
+
+	float speed = 1000;
+	float rotationRate = 50;
 private:
 
 };

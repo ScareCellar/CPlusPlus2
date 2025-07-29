@@ -14,6 +14,14 @@ namespace blood {
 		
 		inline float square(float num) { return num * num; }
 
+		inline float wrap(float value, float min, float max) {
+			float range = max - min;
+			float result = std::fmodf(value - min, range);
+			if (result < 0) result += range;
+
+			return min + result;
+		}
+
 		using namespace std;
 	}
 }

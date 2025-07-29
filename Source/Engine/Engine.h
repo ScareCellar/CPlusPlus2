@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Time.h"
+#include "Core/Time.h"
 #include <memory>
 
 namespace blood {

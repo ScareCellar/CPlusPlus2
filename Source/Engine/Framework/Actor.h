@@ -1,6 +1,7 @@
 #pragma once
 #include "../Core/Math/Transform.h"
 #include "../Renderer/Model.h"
+//#include "../Framework/Scene.h"
 #include <memory>
 #include <string>
 
@@ -12,8 +13,9 @@ namespace blood {
 		std::string tag;
 
 		vec2 velocity{ 0, 0 };
+		float damping{ 10.0f };
 
-
+		class Scene* scene{ nullptr };
 	public:
 		Actor() = default;
 		Actor(const Transform& transform, std::shared_ptr<Model> model) : m_transform{ transform }, m_model{ model } {}

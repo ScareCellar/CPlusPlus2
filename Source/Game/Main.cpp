@@ -7,26 +7,25 @@
 #include "Game/Player.h"
 #include "Game/SpaceGame.h"
 
-#include "../Engine/Core/Random.h"
-#include "../Engine/Core/Math/MathUtils.h"
-#include "../Engine/Core/Math/Vector2.h"
-#include "../Engine/Renderer/Renderer.h"
-#include "../Engine/Input/InputSystem.h"
-#include "../Engine/Core/Audio/AudioSystem.h" 
-#include "../Engine/Core/Math/Vector3.h"
-#include "../Engine/Renderer/Model.h"
-#include "../Engine/Core/Time.h"
-#include "../Engine/Framework/Actor.h"
-#include "../Engine/Source/Engine.h"
-#include "../Engine/Framework/Scene.h"
+#include "Core/Random.h"
+#include "Core/Math/MathUtils.h"
+#include "Core/Math/Vector2.h"
+#include "Renderer/Renderer.h"
+#include "Input/InputSystem.h"
+#include "Core/Audio/AudioSystem.h" 
+#include "Core/Math/Vector3.h"
+#include "Renderer/Model.h"
+#include "Core/Time.h"
+#include "Framework/Actor.h"
+#include "Engine.h"
+#include "Framework/Scene.h"
+
+
 
 using namespace blood;
 
 int main(int argc, char* argv[]) {
-
-
-
-
+ 
     //create systems
     GetEngine().Initialize();
     
@@ -51,7 +50,7 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
     
 
-    GetEngine().GetAudio().PlaySound("test");
+    GetEngine().GetAudio().PlaySound("clap");
 
     vec3 color(0, 0, 0);
 
@@ -65,7 +64,7 @@ int main(int argc, char* argv[]) {
         } 
         //update necessary systems
         GetEngine().Update();
-        game->Update();
+        game->Update(GetEngine().GetTime().GetDeltaTime());
 
         //shutdown when user presses escape button
         if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_ESCAPE)) {

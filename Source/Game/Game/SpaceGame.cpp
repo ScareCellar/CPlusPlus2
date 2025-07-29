@@ -1,8 +1,13 @@
 #include "SpaceGame.h"
 #include "Core/Math/Vector2.h"
 #include "Renderer/Model.h"
+#include "Renderer/Renderer.h"
 #include "Player.h"
-#include "Source/Engine.h"
+#include "Engine.h"
+#include "Core/Random.h"
+#include "Input/InputSystem.h"
+#include "../Game/Game/GameData.h"
+#include "../Game/Enemy.h"
 
 #include <vector>
 
@@ -10,55 +15,64 @@ bool SpaceGame::Initialize()
 {
     m_scene = std::make_unique<Scene>();
 
-    std::vector<blood::vec2> points{
-        { 0.25f, 0},
-        { 0.1767766f, 0.1767766f},
-        { 0, 0.25f},
-        { -0.1767766f, 0.1767766f},
-        { -0.25f, 0},
-        { -1, 0},
-        { -1, 1.75f},
-        { -1.5, 1.75f},
-        { -1.5, -0.75f},
-        { -1, -0.75f},
-        { -1, 0},
-        { -1, -1},
-        { 0, -2.5f},
-        { 1, -1},
-        { 1, -0.75f},
-        { 1.5, -0.75f},
-        { 1.5, 1.75f},
-        { 1, 1.75f},
-        { 1, 2},
-        { -1, 2},
-        { -1, -1},
-        { 1, -1},
-        { 1, 2},
-        { 1, 0},
-        { 0.25f, 0},
-        { 0.1767766f, -0.1767766f},
-        { 0, -0.25f},
-        { -0.1767766f, -0.1767766f},
-        { -0.25f, 0},
-    };
-
-    std::shared_ptr<blood::Model> model = std::make_shared<blood::Model>(points, blood::vec3{ 1,1,0 });
-
-    
-
-
-    //std::vector<std::unique_ptr<blood::Actor>> actors;
-    for (int i = 0; i < 1; i++) {
-        blood::Transform transform = blood::Transform({ 890 ,612 }, 0, 50);
-        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
-        m_scene->AddActor(std::move(player));
-    }
-
+    //make enemies
     return true;
 }
 
-void SpaceGame::Update() {
-    m_scene->Update(GetEngine().GetTime().GetDeltaTime());
+void SpaceGame::Update(float dt) {
+    //m_scene->Update(dt);
+    switch (m_gamestate)
+    {
+    case SpaceGame::GameState::Initialize:
+        m_gamestate = GameState::Title;
+        break;
+    case SpaceGame::GameState::Title:
+        if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) m_gamestate = GameState::StartGame;
+        break;
+    case SpaceGame::GameState::StartGame:
+        m_score = 0;
+        m_lives = 3;
+        m_gamestate = GameState::StartRound;
+        break;
+    case SpaceGame::GameState::StartRound:
+    {
+        // create player
+        std::shared_ptr<blood::Model> model = std::make_shared<blood::Model>(GameData::drillPoints, blood::vec3{ 1.0f, 1.0f, 0.0f });
+        blood::Transform transform{ blood::vec2{ blood::GetEngine().GetRenderer().GetWidth() * 0.5f, blood::GetEngine().GetRenderer().GetHeight() * 0.5f }, 0, 20 };
+        auto player = std::make_unique<Player>(transform, model);
+        player->speed = 1000.0f;
+        player->rotationRate = 30.0f;
+        player->damping = 10.0f;
+        player->name = "player";
+        player->tag = "player";
+
+        m_scene->AddActor(std::move(player));
+        m_gamestate = GameState::Game;
+    }
+    break;
+    case SpaceGame::GameState::Game:
+        m_enemySpawnTimer -= dt;
+        if (m_enemySpawnTimer <= 0) {
+            m_enemySpawnTimer = 4;
+
+            // create enemies
+            std::shared_ptr<Model> enemyModel = std::make_shared<blood::Model>(GameData::drillPoints, vec3{ random::getRandomFloat(), random::getRandomFloat(), random::getRandomFloat() });
+            Transform transform{ vec2{ random::getRandomFloat() * GetEngine().GetRenderer().GetWidth(), random::getRandomFloat() * GetEngine().GetRenderer().GetHeight() }, 0, 10 };
+            std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+            enemy->damping = 0.2f;
+            enemy->speed = (random::getRandomFloat() * 800) + 500;
+            enemy->tag = "enemy";
+            m_scene->AddActor(std::move(enemy));
+        }
+        break;
+    case SpaceGame::GameState::PlayerDead:
+        break;
+    case SpaceGame::GameState::GameOver:
+        break;
+    
+        
+    }
+    m_scene->Update(dt);
 }
 
 void SpaceGame::Draw() {
