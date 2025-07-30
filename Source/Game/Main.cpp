@@ -21,6 +21,7 @@
 #include "Framework/Scene.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "../Engine/Core/File.h"
 
 
 
@@ -28,38 +29,45 @@ using namespace blood;
 
 int main(int argc, char* argv[]) {
 
-    // Test getInt() variants
-    std::cout << "Integer Functions:\n";
-    std::cout << "getInt(): " << blood::random::getInt() << "\n";
-    std::cout << "getInt(): " << blood::random::getInt() << "\n";
-    std::cout << "getInt(10): " << blood::random::getInt(10) << "\n";
-    std::cout << "getInt(10): " << blood::random::getInt(10) << "\n";
-    std::cout << "getInt(5, 15): " << blood::random::getInt(5, 15) << "\n";
-    std::cout << "getInt(5, 15): " << blood::random::getInt(5, 15) << "\n";
-    std::cout << "getInt(-10, 10): " << blood::random::getInt(-10, 10) << "\n\n";
+    // Get current directory path
+    std::cout << "Directory Operations:\n";
+    std::cout << "Current directory: " << blood::file::GetCurrentDirectory() << "\n";
 
-    // Test getReal() variants with float
-    std::cout << "Float Functions:\n";
-    std::cout << std::fixed << std::setprecision(6);
-    std::cout << "getReal<float>(): " << blood::random::getReal<float>() << "\n";
-    std::cout << "getReal<float>(): " << blood::random::getReal<float>() << "\n";
-    std::cout << "getReal<float>(5.0f): " << blood::random::getReal<float>(5.0f) << "\n";
-    std::cout << "getReal<float>(2.5f, 7.5f): " << blood::random::getReal<float>(2.5f, 7.5f) << "\n";
-    std::cout << "getReal<float>(-1.0f, 1.0f): " << blood::random::getReal<float>(-1.0f, 1.0f) << "\n\n";
+    // Set current directory path (current path + "Assets")
+    std::cout << "Setting directory to 'Assets'...\n";
+    blood::file::SetCurrentDirectory("Assets");
+    std::cout << "New directory: " << blood::file::GetCurrentDirectory() << "\n\n";
 
-    // Test getReal() variants with double
-    std::cout << "Double Functions:\n";
-    std::cout << std::setprecision(10);
-    std::cout << "getReal<double>(): " << blood::random::getReal<double>() << "\n";
-    std::cout << "getReal<double>(100.0): " << blood::random::getReal<double>(100.0) << "\n";
-    std::cout << "getReal<double>(0.0, 2.0): " << blood::random::getReal<double>(0.0, 2.0) << "\n\n";
-
-    // Test getBool()
-    std::cout << "Boolean Functions:\n";
-    for (int i = 0; i < 10; ++i) {
-        std::cout << "getBool(): " << std::boolalpha << blood::random::getBool() << "\n";
+    // Get filenames in the current directory
+    std::cout << "Files in Directory:\n";
+    auto filenames = blood::file::GetFilesInDirectory(blood::file::GetCurrentDirectory());
+    for (const auto& filename : filenames) {
+        std::cout << filename << "\n";
     }
     std::cout << "\n";
+
+    // Get filename (filename.extension) only
+    if (!filenames.empty()) {
+        std::cout << "Path Analysis:\n";
+        std::string filename = blood::file::GetFilename(filenames[0]);
+        std::cout << "Filename only: " << filename << "\n";
+
+        // Get extension only
+        std::string ext = blood::file::GetExtension(filenames[0]);
+        std::cout << "Extension: " << ext << "\n\n";
+    }
+
+    // Read and display text file
+    std::cout << "Text File Reading:\n";
+    std::string str;
+    bool success = blood::file::ReadTextFile("test.txt", str);
+    if (success) {
+        std::cout << "Contents of test.txt:\n";
+        std::cout << str << "\n";
+    }
+    else {
+        std::cout << "Failed to read test.txt\n";
+    }
 
  
     //create systems
@@ -77,22 +85,22 @@ int main(int argc, char* argv[]) {
 
 
 
-    //initialize sounds
-    GetEngine().GetAudio().AddSound("test.wav", "test");
-    GetEngine().GetAudio().AddSound("bass.wav", "bass");
-    GetEngine().GetAudio().AddSound("snare.wav", "snare");
-    GetEngine().GetAudio().AddSound("clap.wav", "clap");
-    GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
-    GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
-    
-    Font* font = new Font();
-    font->Load("wingding.ttf", 100);
+    ////initialize sounds
+    //GetEngine().GetAudio().AddSound("test.wav", "test");
+    //GetEngine().GetAudio().AddSound("bass.wav", "bass");
+    //GetEngine().GetAudio().AddSound("snare.wav", "snare");
+    //GetEngine().GetAudio().AddSound("clap.wav", "clap");
+    //GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
+    //GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
+    //
+    //Font* font = new Font();
+    //font->Load("wingding.ttf", 100);
 
-    Text* text = new Text(font);
-    text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });
-    
+    //Text* text = new Text(font);
+    //text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });
+    //
 
-    GetEngine().GetAudio().PlaySound("clap");
+    //GetEngine().GetAudio().PlaySound("clap");
 
     vec3 color(0, 0, 0);
 
@@ -118,7 +126,7 @@ int main(int argc, char* argv[]) {
         GetEngine().GetRenderer().Clear(); // Clear the screen
 
         game->Draw();
-        text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
+        //text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
         GetEngine().GetRenderer().Present(); // Render the screen
 
