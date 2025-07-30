@@ -24,7 +24,7 @@ void SpaceGame::Update(float dt) {
     switch (m_gamestate)
     {
     case SpaceGame::GameState::Initialize:
-        m_gamestate = GameState::Title;
+        m_gamestate = GameState::StartGame;
         break;
     case SpaceGame::GameState::Title:
         if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) m_gamestate = GameState::StartGame;

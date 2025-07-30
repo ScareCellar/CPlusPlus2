@@ -14,6 +14,11 @@ public:
 
 	float speed = 1000;
 	float rotationRate = 50;
+	
+	// Inherited via Actor
+	void OnCollision(Actor* other) override;
+
 private:
-	float shoot_timer{ 1 };
+	float shootTimer{ 0.4f };
+
 };

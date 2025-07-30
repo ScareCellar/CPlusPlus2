@@ -7,8 +7,32 @@ namespace blood {
 
 	void Scene::Update(float dt) {
 		for (auto& actor : m_actors) {
-			if (actor->destroyed) actor->~Actor();
+			
 			actor->Update(dt);
+		}
+		//remove destroyed actors
+		for (auto iter = m_actors.begin(); iter != m_actors.end();) {
+			if ((*iter)->destroyed) {
+				iter = m_actors.erase(iter);
+			}
+			else {
+				iter++;
+			}
+		}
+
+		//check for collisions
+		for (auto& actorA : m_actors) {
+			for (auto& actorB : m_actors) {
+				if (actorA == actorB || (actorA->destroyed || actorB->destroyed)) continue;
+
+				float distance = (actorA->m_transform.position - actorB->m_transform.position).Length();
+
+				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
+					actorA->OnCollision(actorB.get());
+					actorB->OnCollision(actorA.get());
+				}
+
+			}
 		}
 	}
 

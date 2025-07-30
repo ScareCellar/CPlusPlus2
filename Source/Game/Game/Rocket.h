@@ -9,6 +9,9 @@ public:
 
 	void Update(float dt);
 	float speed{ 1000.0f };
+	
+	// Inherited via Actor
+	void OnCollision(Actor* other) override;
+
 private:
-	float lifespan{ 2.0f };
 };

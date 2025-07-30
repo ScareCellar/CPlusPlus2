@@ -16,3 +16,7 @@ void Rocket::Update(float dt) {
 
 	Actor::Update(dt);
 }
+
+void Rocket::OnCollision(Actor* other)
+{
+}

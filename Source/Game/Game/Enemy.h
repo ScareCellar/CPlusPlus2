@@ -16,6 +16,7 @@ public:
 
 	float speed;
 	float rotationRate;
-private:
 
+	// Inherited via Actor
+	void OnCollision(Actor* other) override;
 };
