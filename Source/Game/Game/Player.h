@@ -15,5 +15,5 @@ public:
 	float speed = 1000;
 	float rotationRate = 50;
 private:
-
+	float shoot_timer{ 1 };
 };

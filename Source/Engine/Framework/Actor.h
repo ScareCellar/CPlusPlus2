@@ -29,5 +29,7 @@ namespace blood {
 		Transform m_transform;
 		std::shared_ptr<Model> m_model;
 
+		bool destroyed = false;
+
 	};
 }

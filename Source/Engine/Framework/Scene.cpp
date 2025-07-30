@@ -7,6 +7,7 @@ namespace blood {
 
 	void Scene::Update(float dt) {
 		for (auto& actor : m_actors) {
+			if (actor->destroyed) actor->~Actor();
 			actor->Update(dt);
 		}
 	}

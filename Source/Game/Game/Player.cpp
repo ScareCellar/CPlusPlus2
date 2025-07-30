@@ -32,8 +32,10 @@ void Player::Update(float dt) {
 
     m_transform.position.x = math::wrap(m_transform.position.x, 0.0f, 1980.0f);
     m_transform.position.y = math::wrap(m_transform.position.y, 0.0f, 1224.0f);
+
+    shoot_timer -= dt;
     
-    if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) {
+    if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && shoot_timer <= 0) {
         std::shared_ptr<blood::Model> model = std::make_shared<blood::Model>(GameData::drillPoints, blood::vec3{ 1.0f, 1.0f, 0.0f });
         blood::Transform transform{ this->m_transform.position, this->m_transform.rotation, 10 };
         auto rocket = std::make_unique<Rocket>(transform, model);
@@ -42,7 +44,7 @@ void Player::Update(float dt) {
         rocket->damping = 10.0f;
         rocket->name = "rocket";
         rocket->tag = "player";
-
+        shoot_timer = 1;
         scene->AddActor(std::move(rocket));
     }
 

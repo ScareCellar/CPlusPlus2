@@ -8,6 +8,7 @@ public:
 	Rocket(blood::Transform& transform, std::shared_ptr<blood::Model> model) : Actor{transform, model} {};
 
 	void Update(float dt);
-	float speed;
+	float speed{ 1000.0f };
 private:
+	float lifespan{ 2.0f };
 };

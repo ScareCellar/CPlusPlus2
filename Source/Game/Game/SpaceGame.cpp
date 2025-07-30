@@ -56,11 +56,11 @@ void SpaceGame::Update(float dt) {
             m_enemySpawnTimer = 4;
 
             // create enemies
-            std::shared_ptr<Model> enemyModel = std::make_shared<blood::Model>(GameData::drillPoints, vec3{ random::getRandomFloat(), random::getRandomFloat(), random::getRandomFloat() });
-            Transform transform{ vec2{ random::getRandomFloat() * GetEngine().GetRenderer().GetWidth(), random::getRandomFloat() * GetEngine().GetRenderer().GetHeight() }, 0, 10 };
+            std::shared_ptr<Model> enemyModel = std::make_shared<blood::Model>(GameData::drillPoints, vec3{ random::getReal(), random::getReal(), random::getReal() });
+            Transform transform{ vec2{ random::getReal() * GetEngine().GetRenderer().GetWidth(), random::getReal() * GetEngine().GetRenderer().GetHeight() }, 0, 10 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
             enemy->damping = 0.2f;
-            enemy->speed = (random::getRandomFloat() * 800) + 500;
+            enemy->speed = (random::getReal() * 800) + 500;
             enemy->tag = "enemy";
             m_scene->AddActor(std::move(enemy));
         }

@@ -11,5 +11,8 @@ void Rocket::Update(float dt) {
 	m_transform.position.x = blood::math::wrap(m_transform.position.x, 0.0f, 1980.0f);
 	m_transform.position.y = blood::math::wrap(m_transform.position.y, 0.0f, 1224.0f);
 
+	lifespan -= dt;
+	if (lifespan <= 0) destroyed = true;
+
 	Actor::Update(dt);
 }
