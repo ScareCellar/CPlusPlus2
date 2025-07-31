@@ -124,5 +124,8 @@
     <ClInclude Include="Renderer\Text.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\ParticleSystem.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

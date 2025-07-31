@@ -28,6 +28,9 @@
 using namespace blood;
 
 int main(int argc, char* argv[]) { 
+
+    blood::file::SetCurrentDirectory("Assets");
+
     //create systems
     GetEngine().Initialize();
     
@@ -43,20 +46,20 @@ int main(int argc, char* argv[]) {
 
 
 
-    ////initialize sounds
-    //GetEngine().GetAudio().AddSound("test.wav", "test");
-    //GetEngine().GetAudio().AddSound("bass.wav", "bass");
-    //GetEngine().GetAudio().AddSound("snare.wav", "snare");
-    //GetEngine().GetAudio().AddSound("clap.wav", "clap");
-    //GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
-    //GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
-    //
-    //Font* font = new Font();
-    //font->Load("wingding.ttf", 100);
+    //initialize sounds
+    GetEngine().GetAudio().AddSound("test.wav", "test");
+    GetEngine().GetAudio().AddSound("bass.wav", "bass");
+    GetEngine().GetAudio().AddSound("snare.wav", "snare");
+    GetEngine().GetAudio().AddSound("clap.wav", "clap");
+    GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
+    GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
+    
+    Font* font = new Font();
+    font->Load("wingding.ttf", 100);
 
-    //Text* text = new Text(font);
-    //text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });
-    //
+    /*Text* text = new Text(font);
+    text->Create(GetEngine().GetRenderer(), "Hello World!", vec3{ 1,1,1 });*/
+    
 
     //GetEngine().GetAudio().PlaySound("clap");
 
@@ -83,34 +86,18 @@ int main(int argc, char* argv[]) {
         GetEngine().GetRenderer().SetColorFloat(color.r, color.g, color.b);
         GetEngine().GetRenderer().Clear(); // Clear the screen
 
-        game->Draw();
+        game->Draw(GetRenderer());
         //text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
         GetEngine().GetRenderer().Present(); // Render the screen
 
     }
     //delete pointers
-    
+    game->Shutdown();
+    game.release();
 
     //shutdown systems
     GetEngine().Shutdown();
 
     return 0;
 }
-
-/*
-        //blood::vec2 direction{ 0,0 };
-        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction.y = -1;//1000 * time.GetDeltaTime();
-        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction.x = -1;//100 * time.GetDeltaTime();
-        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction.y = 1;//100 * time.GetDeltaTime();
-        //if (GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction.x = 1;//100 * time.GetDeltaTime();
-        //
-
-        //if (direction.LengthSqr() > 0) {
-        //    direction = direction.Normalized();
-            for (auto& actor : actors) {
-                actor->GetTransform().position += (direction * 200) * time.GetDeltaTime();
-            
-            //}
-
-*/

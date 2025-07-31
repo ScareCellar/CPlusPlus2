@@ -10,11 +10,22 @@
 #include "../Game/Enemy.h"
 
 #include <vector>
+#include <iostream>
+#include <memory>
 
 bool SpaceGame::Initialize()
 {
-    m_scene = std::make_unique<Scene>();
+    m_scene = std::make_unique<Scene>(this);
 
+    m_titleFont = std::make_shared<blood::Font>();
+    m_titleFont->Load("wingding.ttf", 128);
+
+    m_uiFont = std::make_shared<blood::Font>();
+    m_uiFont->Load("wingding.ttf", 64);
+
+    m_titleText = std::make_unique<blood::Text>(m_titleFont);
+    m_scoreText = std::make_unique<blood::Text>(m_uiFont);
+    m_livesText = std::make_unique<blood::Text>(m_uiFont);
     //make enemies
     return true;
 }
@@ -24,7 +35,7 @@ void SpaceGame::Update(float dt) {
     switch (m_gamestate)
     {
     case SpaceGame::GameState::Initialize:
-        m_gamestate = GameState::StartGame;
+        m_gamestate = GameState::Title;
         break;
     case SpaceGame::GameState::Title:
         if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE)) m_gamestate = GameState::StartGame;
@@ -36,6 +47,8 @@ void SpaceGame::Update(float dt) {
         break;
     case SpaceGame::GameState::StartRound:
     {
+        
+
         // create player
         std::shared_ptr<blood::Model> model = std::make_shared<blood::Model>(GameData::drillPoints, blood::vec3{ 1.0f, 1.0f, 0.0f });
         blood::Transform transform{ blood::vec2{ blood::GetEngine().GetRenderer().GetWidth() * 0.5f, blood::GetEngine().GetRenderer().GetHeight() * 0.5f }, 0, 20 };
@@ -54,19 +67,25 @@ void SpaceGame::Update(float dt) {
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0) {
             m_enemySpawnTimer = 4;
-
-            // create enemies
-            std::shared_ptr<Model> enemyModel = std::make_shared<blood::Model>(GameData::drillPoints, vec3{ random::getReal(), random::getReal(), random::getReal() });
-            Transform transform{ vec2{ random::getReal() * GetEngine().GetRenderer().GetWidth(), random::getReal() * GetEngine().GetRenderer().GetHeight() }, 0, 10 };
-            std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
-            enemy->damping = 0.2f;
-            enemy->speed = (random::getReal() * 800) + 500;
-            enemy->tag = "enemy";
-            m_scene->AddActor(std::move(enemy));
+            SpawnEnemy();
         }
         break;
     case SpaceGame::GameState::PlayerDead:
+        m_scene->RemoveAllActors();
+        m_stateTimer -= dt;
+        if (m_stateTimer <= 0) {
+            m_lives -= 1;
+
+            if (m_lives == 0) {
+                m_gamestate = GameState::GameOver;
+                m_stateTimer = 4;
+            }
+            else {
+                m_gamestate = GameState::StartRound;
+            }
+        }
         break;
+        
     case SpaceGame::GameState::GameOver:
         break;
     
@@ -75,12 +94,47 @@ void SpaceGame::Update(float dt) {
     m_scene->Update(dt);
 }
 
-void SpaceGame::Draw() {
-    m_scene->Draw(GetRenderer());
+void SpaceGame::Draw(blood::Renderer& renderer) {
+    if (m_gamestate == GameState::Title) {
+        m_titleText->Create(renderer, "Blood", blood::vec3{ 1,0,0 });
+        m_titleText->Draw(renderer, (float)renderer.GetWidth() / 2, (float)renderer.GetHeight() / 2);
+    }
+    if (m_gamestate == GameState::GameOver) {
+        m_titleText->Create(renderer, "Game Over", blood::vec3{ 1,0,0 });
+        m_titleText->Draw(renderer, (float)renderer.GetWidth() / 2, (float)renderer.GetHeight() / 2);
+    }
+
+    m_scoreText->Create(renderer, std::to_string(GetPoints()), {1,1,1});
+    m_scoreText->Draw(renderer, 20, 20);
+
+    m_scoreText->Create(renderer, std::to_string(GetLives()), {1,1,1});
+    m_scoreText->Draw(renderer, (float)renderer.GetWidth() - 100, (float)renderer.GetHeight() - 100);
+
+    m_scene->Draw(renderer);
 }
 
 void SpaceGame::Shutdown() {
 
+}
+
+void SpaceGame::SpawnEnemy() {
+    Actor* player = m_scene->GetActorByName<Actor>("player");
+    if (player) {
+        blood::vec2 position = player->m_transform.position + blood::random::onUnitCircle();
+
+        std::shared_ptr<Model> enemyModel = std::make_shared<blood::Model>(GameData::drillPoints, vec3{ 1,0,0 });
+        Transform transform{ vec2{ random::getReal() * GetEngine().GetRenderer().GetWidth(), random::getReal() * GetEngine().GetRenderer().GetHeight() }, 0, 10 };
+        std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+        enemy->damping = 0.2f;
+        enemy->speed = 50;
+        enemy->tag = "enemy";
+        m_scene->AddActor(std::move(enemy));
+    }
+}
+
+void SpaceGame::OnPlayerDestroyed(){
+    m_gamestate = GameState::PlayerDead;
+    m_stateTimer = 2;
 }
 
 

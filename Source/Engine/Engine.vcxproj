@@ -204,6 +204,7 @@
     <ClInclude Include="Input\InputSystem.h" />
     <ClInclude Include="Renderer\Font.h" />
     <ClInclude Include="Renderer\Model.h" />
+    <ClInclude Include="Renderer\ParticleSystem.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Text.h" />
     <ClInclude Include="Sound\Header.h" />

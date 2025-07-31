@@ -14,8 +14,10 @@ public:
 	void Update(float dt) override;
 	void Draw(Renderer& renderer) override;
 
-	float speed;
-	float rotationRate;
+	float speed{ 100 };
+	float rotationRate{ 0 };
+
+	float shootTimer = 1;
 
 	// Inherited via Actor
 	void OnCollision(Actor* other) override;

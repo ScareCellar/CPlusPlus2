@@ -8,7 +8,7 @@
 namespace blood{
 	class Scene {
 	public:
-		Scene() = default;
+		Scene(class Game* game) : m_game{ game } {}
 
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
@@ -40,8 +40,16 @@ namespace blood{
 			}
 			return results;
 		}
+
+		class Game* GetGame() { 
+			return m_game; 
+		}
+
+		void RemoveAllActors() { m_actors.clear(); }
+
 	private:
 		std::list<std::unique_ptr<Actor>> m_actors;
+		class Game* m_game{ nullptr };
 
 	};
 }

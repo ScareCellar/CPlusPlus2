@@ -1,12 +1,14 @@
 #include "Player.h"
 #include "Engine.h"
 #include "Input/InputSystem.h"
+#include "../Engine/Core/Audio/AudioSystem.h"
 #include "Renderer/Renderer.h"
 #include "../Game/GameData.h"
 #include "Framework/Actor.h"
 #include "../Engine/Renderer/Model.h"
 #include "Framework/Scene.h"
 #include "../Game/Game/Rocket.h"
+#include "SpaceGame.h"
 
 
 using namespace blood;
@@ -38,12 +40,13 @@ void Player::Update(float dt) {
     shootTimer -= dt;
     
     if (blood::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_SPACE) && shootTimer <= 0) {
+        blood::GetEngine().GetAudio().PlaySound("clap");
+
+
         std::shared_ptr<blood::Model> model = std::make_shared<blood::Model>(GameData::drillPoints, blood::vec3{ 1.0f, 1.0f, 0.0f });
         blood::Transform transform{ this->m_transform.position, this->m_transform.rotation, 10 };
         auto rocket = std::make_unique<Rocket>(transform, model);
         rocket->speed = 1000.0f;
-        //player->rotationRate = 30.0f;
-        rocket->damping = 10.0f;
         rocket->lifespan = 2.0f;
         rocket->name = "rocket";
         rocket->tag = "player";
@@ -59,4 +62,8 @@ void Player::Draw(Renderer& renderer) {
 
 void Player::OnCollision(Actor* other)
 {
+    if (tag != other->tag) {
+        destroyed = true;
+        dynamic_cast<SpaceGame*>(scene->GetGame())->OnPlayerDestroyed();
+    }
 }

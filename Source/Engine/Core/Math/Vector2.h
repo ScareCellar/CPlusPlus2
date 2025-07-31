@@ -58,6 +58,26 @@ namespace blood {
 
 			return v;
 		}
+
+		static float Dot(const Vector2& a, const Vector2& b) {
+			return a.x * b.x + a.y * b.y;
+		}
+
+		static float Cross(const Vector2& a, const Vector2& b) {
+			return a.x* b.x - a.y * b.y;
+		}
+
+		static float AngleBetween(const Vector2& a, const Vector2& b) {
+			return math::acosf(Dot(a, b));
+		}
+
+		static float SignedAngleBetween(const Vector2& a, const Vector2& b) {
+			float x = Dot(a, b);
+			float y = Cross(a, b);
+
+			return math::atan2f(y, x);
+		}
+
 	};
 
 	using ivec2 = Vector2<int>;

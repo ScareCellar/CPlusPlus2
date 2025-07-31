@@ -1,4 +1,8 @@
 #pragma once
+#include "../Core/Math/MathUtils.h"
+#include "../Core/Math/Vector2.h"
+
+
 #include <cstdlib>
 #include <random>
 
@@ -49,6 +53,18 @@ namespace blood {
         inline bool getBool() {
             static std::bernoulli_distribution dist(0.5);
             return dist(generator());
+        }
+
+        /// <summary>
+        /// Generates a 2D vector located on the unit circle.
+        /// </summary>
+        /// <returns>A vec2 representing a point on the unit circle, with x and y components corresponding to the cosine and sine of a random angle in radians.</returns>
+        inline vec2 onUnitCircle() {
+            float radians = getReal(math::twoPi);
+            vec2 v;
+            v.x = math::cosf(radians);
+            v.y = math::sinf(radians);
+            return v;
         }
 
         //end of new random

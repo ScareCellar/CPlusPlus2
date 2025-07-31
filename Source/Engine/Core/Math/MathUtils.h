@@ -22,6 +22,11 @@ namespace blood {
 			return min + result;
 		}
 
+		template<typename T>
+		inline T sign(T v) {
+			return (v < 0) ? (T)-1 : (v > 0) ? (T)1 : (T)0;
+		}
+
 		using namespace std;
 	}
 }

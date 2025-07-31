@@ -24,6 +24,6 @@ namespace blood {
     }
     float Actor::GetRadius()
     {
-        return (m_model) ? m_model->GetRadius() * m_transform.scale : 0;
+        return (m_model) ? m_model->GetRadius() * m_transform.scale * 0.5f : 0;
     }
 }
